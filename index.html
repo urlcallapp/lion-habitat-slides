@@ -13,17 +13,17 @@ html,body{height:100%;overflow:hidden;background:#222;font-family:"Heebo","Arial
  background:linear-gradient(var(--sky) 0 55%,var(--sand) 55%);opacity:0;visibility:hidden;transform:translateX(-6%);transition:opacity .6s,transform .6s,visibility .6s;overflow:hidden}
 .slide.active{opacity:1;visibility:visible;transform:none}
 .slide.past{transform:translateX(6%)}
-.text{max-height:70vh;overflow:auto;flex:1.2;z-index:2;background:rgba(255,255,255,.82);border-radius:28px;padding:3.5vh 3vw;box-shadow:0 8px 24px rgba(0,0,0,.15)}
+.text{max-height:76vh;overflow:auto;flex:1.2;z-index:2;background:rgba(255,255,255,.82);border-radius:28px;padding:3.5vh 3vw;box-shadow:0 8px 24px rgba(0,0,0,.15)}
 .art{flex:1;display:flex;align-items:center;justify-content:center;z-index:2;max-height:100%}
 .art svg{width:100%;max-height:62vh}
 h1{font-size:clamp(30px,5.5vw,72px);color:var(--mane);line-height:1.1}
 h2{font-size:clamp(28px,4.6vw,56px);color:var(--mane);margin-bottom:2vh}
-p,li{font-size:clamp(18px,2.6vw,34px);line-height:1.5}
+p,li{font-size:clamp(18px,2.2vw,30px);line-height:1.5}
 ul{padding-inline-start:1.2em}li{margin:.5vh 0}
 .big{font-size:clamp(22px,3vw,40px)}
 .title-slide{flex-direction:column;text-align:center}
 .title-slide .text{flex:none;max-width:80vw}
-.src li{font-size:clamp(13px,1.7vw,22px)} .src a{color:#1d5fa8}
+.src li{font-size:clamp(16px,1.7vw,22px)} .src a{color:#1d5fa8}
 .slide.active .text>*{animation:rise .7s both}
 .slide.active .text>*:nth-child(2){animation-delay:.2s}
 .slide.active .text>*:nth-child(3){animation-delay:.4s}
@@ -49,7 +49,7 @@ ul{padding-inline-start:1.2em}li{margin:.5vh 0}
 #nav button:disabled{opacity:.4}
 #count{background:#fff;border-radius:999px;padding:.3em 1em;font-size:clamp(14px,1.8vw,22px)}
 #bar{position:fixed;top:0;right:0;height:6px;background:var(--mane);z-index:10;transition:width .4s}
-@media (max-width:700px){.slide:not(.title-slide){flex-direction:column;padding:3vh 4vw 14vh;gap:1vh}.art svg{max-height:26vh}.text{padding:2vh 4vw}}
+@media (max-width:700px){.slide:not(.title-slide){flex-direction:column;padding:3vh 4vw 14vh;gap:1vh}.art svg{max-height:30vh}.text{flex:none;max-height:none;overflow:visible}.art{flex:1;min-height:0}p,li{font-size:22px}h2{font-size:32px}.src li{font-size:17px}.text{padding:2vh 4vw}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -92,9 +92,8 @@ ul{padding-inline-start:1.2em}li{margin:.5vh 0}
 </section>
 
 <section class="slide">
- <div class="text"><h2>להקה שנקראת להקת אריות</h2>
- <ul><li>הלהקה נקראת בעברית "להקה", ובאנגלית pride.</li>
- <li>הלהקה היא משפחה: לביאות (אמהות, אחיות ובנות דודות), הגורים, וזכר אחד או כמה.</li>
+ <div class="text"><h2>להקת אריות</h2>
+ <ul> <li>הלהקה היא משפחה: לביאות, גורים, וזכר אחד או כמה. באנגלית היא נקראת pride.</li>
  <li>בלהקה יכולים להיות מכמה אריות ועד כ־40.</li>
  <li>הלביאות נשארות בדרך כלל בלהקה כל החיים.</li></ul></div>
  <div class="art"><svg viewBox="0 0 300 200">
@@ -112,7 +111,7 @@ ul{padding-inline-start:1.2em}li{margin:.5vh 0}
  <ul><li>האריה אוכל בשר בלבד. הוא טורף.</li>
  <li>הוא צד חיות גדולות כמו זברות וגנו (wildebeest).</li>
  <li>את רוב הציד עושות הלביאות.</li>
- <li>כשצדים יחד, מצליחים יותר: כ־30% מהניסיונות, לעומת כ־17% כשצד אריה אחד.</li></ul></div>
+ <li>כשצדים יחד, מצליחים יותר מאשר כשאריה צד לבד.</li></ul></div>
  <div class="art"><svg viewBox="0 0 300 200">
   <rect y="140" width="300" height="60" fill="#e8cf8a"/>
   <g class="run"><g>
@@ -156,8 +155,8 @@ ul{padding-inline-start:1.2em}li{margin:.5vh 0}
 
 <section class="slide">
  <div class="text"><h2>צריך לשמור על האריות</h2>
- <ul><li>אריות נעלמו מכ־94% מהאזורים שבהם חיו בעבר.</li>
- <li>ארגון IUCN מגדיר את האריה "פגיע" (Vulnerable) בסכנת הכחדה.</li>
+ <ul><li>אריות נעלמו מהרבה מקומות שבהם חיו פעם.</li>
+ <li>ארגון בינלאומי להגנת הטבע (IUCN) מגדיר את האריה "פגיע", כלומר בסכנה.</li>
  <li>שמורות טבע ופארקים לאומיים עוזרים להגן עליהם ועל בית הגידול שלהם.</li></ul></div>
  <div class="art"><svg viewBox="0 0 200 200">
   <g class="bob"><use href="#lionface" x="30" y="30" width="140" height="140"/></g>
@@ -179,7 +178,7 @@ ul{padding-inline-start:1.2em}li{margin:.5vh 0}
 </section>
 </div>
 
-<div id="nav"><button id="next">הבא ←</button><span id="count"></span><button id="prev">→ הקודם</button></div>
+<div id="nav"><button id="next">הבא ←</button><span id="count" dir="ltr"></span><button id="prev">→ הקודם</button></div>
 
 <svg width="0" height="0" style="position:absolute"><defs>
  <symbol id="lionface" viewBox="0 0 200 200">
