@@ -3,237 +3,484 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>האריה ובית הגידול שלו</title>
+<title>האריה - מלך הסוואנה</title>
+<meta name="description" content="מצגת אינטראקטיבית על האריה ובית הגידול שלו">
 <meta property="og:type" content="website">
+<meta property="og:title" content="האריה - מלך הסוואנה">
 <meta property="og:image" content="https://urlcallapp.github.io/lion-habitat-slides/og-thumbnail.jpg">
 <meta property="og:image:secure_url" content="https://urlcallapp.github.io/lion-habitat-slides/og-thumbnail.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="האריה ובית הגידול שלו - מצגת שקפים מונפשת לילדים">
+<meta property="og:image:alt" content="האריה - מלך הסוואנה: מצגת אינטראקטיבית עם שקיעה בסוואנה">
 <meta name="twitter:card" content="summary_large_image">
 <style>
-:root{--sand:#fbe8b8;--gold:#e9a23b;--mane:#a85b1c;--grass:#7fa83c;--sky:#bfe4f2;--ink:#3a2a14}
+:root{--gold:#f2a93b;--mane:#a85b1c;--ink:#3a2a14;--cream:rgba(255,248,230,.93)}
 *{box-sizing:border-box;margin:0}
-html,body{height:100%;overflow:hidden;background:#222;font-family:"Heebo","Arial","Segoe UI",sans-serif;color:var(--ink)}
-#deck{position:relative;width:100vw;height:100vh}
-.slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:4vw;padding:6vh 7vw 12vh;
- background:linear-gradient(var(--sky) 0 55%,var(--sand) 55%);opacity:0;visibility:hidden;transform:translateX(-6%);transition:opacity .6s,transform .6s,visibility .6s;overflow:hidden}
+html,body{height:100%;overflow:hidden;background:#0b1022;font-family:"Heebo","Rubik","Assistant","Arial","Segoe UI",sans-serif;color:var(--ink);-webkit-tap-highlight-color:transparent}
+#world{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+#deck{position:fixed;inset:0;z-index:1}
+#deck.shake{animation:shake .6s}
+@keyframes shake{10%,50%,90%{transform:translate(-5px,2px)}30%,70%{transform:translate(5px,-2px)}}
+.slide{position:absolute;inset:0;display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:3vw;padding:5vh 6vw 14vh;
+ opacity:0;visibility:hidden;transform:scale(1.04);transition:opacity .7s,transform .9s cubic-bezier(.2,.8,.2,1),visibility .7s}
 .slide.active{opacity:1;visibility:visible;transform:none}
-.slide.past{transform:translateX(6%)}
-.text{max-height:76vh;overflow:auto;flex:1.2;z-index:2;background:rgba(255,255,255,.82);border-radius:28px;padding:3.5vh 3vw;box-shadow:0 8px 24px rgba(0,0,0,.15)}
-.art{flex:1;display:flex;align-items:center;justify-content:center;z-index:2;max-height:100%}
-.art svg{width:100%;max-height:62vh}
-h1{font-size:clamp(30px,5.5vw,72px);color:var(--mane);line-height:1.1}
-h2{font-size:clamp(28px,4.6vw,56px);color:var(--mane);margin-bottom:2vh}
-p,li{font-size:clamp(18px,2.2vw,30px);line-height:1.5}
-ul{padding-inline-start:1.2em}li{margin:.5vh 0}
-.big{font-size:clamp(22px,3vw,40px)}
-.title-slide{flex-direction:column;text-align:center}
-.title-slide .text{flex:none;max-width:80vw}
-.src li{font-size:clamp(16px,1.7vw,22px)} .src a{color:#1d5fa8}
-.slide.active .text>*{animation:rise .7s both}
-.slide.active .text>*:nth-child(2){animation-delay:.2s}
-.slide.active .text>*:nth-child(3){animation-delay:.4s}
-.slide.active li{animation:rise .6s both}
-.slide.active li:nth-child(1){animation-delay:.3s}.slide.active li:nth-child(2){animation-delay:.6s}.slide.active li:nth-child(3){animation-delay:.9s}.slide.active li:nth-child(4){animation-delay:1.2s}
-@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
-.slide.active .art svg{animation:pop .8s .2s both}
-@keyframes pop{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:none}}
-.sun{animation:spin 20s linear infinite;transform-origin:center;transform-box:fill-box}
-@keyframes spin{to{transform:rotate(360deg)}}
-.bob{animation:bob 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
-@keyframes bob{50%{transform:translateY(-8px)}}
-.blink{animation:blink 4s infinite;transform-box:fill-box;transform-origin:center}
-@keyframes blink{0%,92%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
-.sway{animation:sway 3s ease-in-out infinite;transform-box:fill-box;transform-origin:bottom}
-@keyframes sway{50%{transform:rotate(4deg)}}
-.run{animation:run 6s linear infinite}
-@keyframes run{from{transform:translateX(120%)}to{transform:translateX(-120%)}}
-.grass{position:absolute;bottom:0;left:0;right:0;height:11vh;z-index:1;
- background:repeating-linear-gradient(100deg,var(--grass) 0 14px,#6a9430 14px 28px);clip-path:polygon(0 40%,5% 10%,10% 40%,15% 5%,20% 40%,25% 10%,30% 40%,35% 5%,40% 40%,45% 10%,50% 40%,55% 5%,60% 40%,65% 10%,70% 40%,75% 5%,80% 40%,85% 10%,90% 40%,95% 5%,100% 40%,100% 100%,0 100%)}
-#nav{position:fixed;bottom:2vh;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:2vw;z-index:10}
-#nav button{font:inherit;font-size:clamp(18px,2.4vw,28px);border:0;border-radius:999px;padding:.5em 1.4em;background:var(--mane);color:#fff;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.3)}
-#nav button:disabled{opacity:.4}
-#count{background:#fff;border-radius:999px;padding:.3em 1em;font-size:clamp(14px,1.8vw,22px)}
-#bar{position:fixed;top:0;right:0;height:6px;background:var(--mane);z-index:10;transition:width .4s}
-@media (max-width:700px){.slide:not(.title-slide){flex-direction:column;padding:3vh 4vw 14vh;gap:1vh}.art svg{max-height:30vh}.text{flex:none;max-height:none;overflow:visible}.art{flex:1;min-height:0}p,li{font-size:22px}h2{font-size:32px}.src li{font-size:17px}.text{padding:2vh 4vw}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.slide.past{transform:scale(.96)}
+.card{background:var(--cream);border-radius:32px;padding:3.5vh 2.6vw;box-shadow:0 18px 50px rgba(0,0,0,.28);backdrop-filter:blur(6px);max-height:74vh;overflow:auto}
+.dark .card{background:rgba(14,20,52,.86);color:#f6ecd3}
+.dark h2{color:#ffd37a}
+h1{font-size:clamp(44px,9vw,130px);line-height:1;font-weight:900;color:#ffd36a;-webkit-text-stroke:2px #8a4210;paint-order:stroke fill;text-shadow:0 6px 0 #8a4210,0 12px 28px rgba(0,0,0,.45)}
+h1 span{display:inline-block}
+.slide.active h1 span{animation:letter .9s cubic-bezier(.2,1.4,.4,1) both;animation-delay:calc(var(--i)*.12s + .3s)}
+@keyframes letter{from{opacity:0;transform:translateY(60px) scale(.4) rotate(-12deg)}to{opacity:1;transform:none}}
+h2{font-size:clamp(28px,4vw,58px);color:var(--mane);margin-bottom:1.4vh;line-height:1.1;font-weight:900}
+h2::after{content:"";display:block;height:6px;width:90px;border-radius:9px;background:linear-gradient(90deg,var(--gold),#e0453a);margin-top:1vh}
+.sub{font-size:clamp(22px,3.2vw,46px);font-weight:700;color:#fff;text-shadow:0 3px 14px rgba(0,0,0,.55);margin-top:1vh}
+.chips{display:flex;gap:1.2vw;justify-content:center;flex-wrap:wrap;margin-top:2vh}
+.chip{font-size:clamp(18px,2.4vw,34px);font-weight:800;background:var(--cream);color:var(--mane);border-radius:999px;padding:.3em 1em;box-shadow:0 8px 20px rgba(0,0,0,.3)}
+.hint{margin-top:2vh;color:#fff;font-size:clamp(14px,1.6vw,22px);opacity:.9;text-shadow:0 2px 8px rgba(0,0,0,.6);animation:blinkhint 2.4s infinite}
+@keyframes blinkhint{50%{opacity:.35}}
+.fact{display:flex;gap:1.2vw;align-items:center;background:#fff;border-radius:22px;padding:1.3vh 1.2vw;margin:1.3vh 0;box-shadow:0 5px 14px rgba(120,70,20,.18);font-size:clamp(17px,2.1vw,30px);line-height:1.35}
+.dark .fact{background:rgba(255,255,255,.1);box-shadow:none}
+.ic{flex:none;width:2.1em;height:2.1em;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#ffe9a8,#f2a93b);font-size:1.15em;box-shadow:inset 0 -4px 0 rgba(150,80,10,.25)}
+.num{font-weight:900;color:#c4621a;font-variant-numeric:tabular-nums}
+.dark .num{color:#ffd37a}
+.frag{opacity:0;transform:translateY(26px) scale(.96);transition:opacity .6s,transform .7s cubic-bezier(.2,1.3,.4,1)}
+.frag.on{opacity:1;transform:none}
+[data-at]:not(.frag){opacity:0;transition:opacity .8s,transform .8s}
+[data-at].on:not(.frag){opacity:1}
+.stage{position:relative;display:flex;align-items:center;justify-content:center;min-height:0;height:100%;max-height:70vh}
+.title-slide{grid-template-columns:1fr;justify-items:center;text-align:center;align-content:center;padding:3vh 6vw 16vh;gap:0}
+.title-slide .stage{height:auto;max-height:none}
+.lion{display:block;width:100%;height:auto;cursor:pointer;overflow:visible;touch-action:manipulation}
+.lion .petal{animation:flutter 3.6s ease-in-out infinite;animation-delay:calc(var(--d)*1s);transform-origin:100px 100px}
+@keyframes flutter{50%{transform:rotate(3deg) scale(1.025)}}
+.lion .eye{animation:blink 5s infinite;transform-box:fill-box;transform-origin:center}
+@keyframes blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.08)}}
+.lion.sleepy .eye{animation:none;transform:scaleY(.08)}
+.mopen{opacity:0}
+.lion.roaring .mopen{opacity:1}.lion.roaring .mclosed{opacity:0}
+.lion.roaring{animation:roar 1.4s}
+@keyframes roar{10%,30%,50%{transform:scale(1.12) rotate(-2deg)}20%,40%,60%{transform:scale(1.14) rotate(2deg)}100%{transform:none}}
+.lion.roaring .petal{animation:flare .25s infinite alternate}
+@keyframes flare{to{transform:scale(1.1)}}
+.bounce{animation:bounce 3s ease-in-out infinite}
+@keyframes bounce{50%{transform:translateY(-1.6vh)}}
+.ring{position:absolute;left:50%;top:50%;width:20%;aspect-ratio:1;border:6px solid rgba(255,230,160,.9);border-radius:50%;transform:translate(-50%,-50%) scale(.2);opacity:0;pointer-events:none;animation:ring 1.4s ease-out forwards}
+@keyframes ring{0%{opacity:.9;transform:translate(-50%,-50%) scale(.3)}100%{opacity:0;transform:translate(-50%,-50%) scale(5)}}
+.sunhalo{position:absolute;left:50%;top:50%;width:150%;aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none;
+ background:repeating-conic-gradient(from 0deg,rgba(255,236,160,.35) 0 6deg,transparent 6deg 15deg);-webkit-mask:radial-gradient(circle,#000 8%,transparent 62%);mask:radial-gradient(circle,#000 8%,transparent 62%);animation:spin 60s linear infinite}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.pride{display:flex;align-items:flex-end;justify-content:center;gap:1vw;width:100%}
+.pride .lion{flex:none}
+.pride>div{animation:walkin 1s cubic-bezier(.2,1.2,.4,1) both}
+.slide:not(.active) .pride>div{animation:none;opacity:0}
+@keyframes walkin{from{opacity:0;transform:translateX(-80px) scale(.6)}to{opacity:1;transform:none}}
+.dots{display:grid;grid-template-columns:repeat(10,1fr);gap:.7vw;width:min(34vw,420px);margin:2vh auto 0;direction:ltr}
+.dots i{aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,.35);border:2px solid rgba(255,255,255,.7);transition:.35s}
+.dots i.f{background:radial-gradient(circle at 35% 30%,#ffe9a8,#f2a93b);border-color:#a85b1c;transform:scale(1.1)}
+.pcount{text-align:center;color:#fff;font-weight:800;font-size:clamp(18px,2.4vw,34px);text-shadow:0 2px 10px rgba(0,0,0,.6);margin-top:.5vh}
+.seg{display:flex;gap:.6vw;background:rgba(0,0,0,.3);border-radius:999px;padding:.4vh .4vw;margin-top:1vh}
+button{font:inherit;cursor:pointer}
+.seg button,.btn{border:0;border-radius:999px;padding:.4em 1.2em;font-weight:800;font-size:clamp(16px,2vw,28px);color:#fff;background:transparent}
+.seg button.on{background:var(--gold);color:#4a2508;box-shadow:0 3px 10px rgba(0,0,0,.35)}
+.btn{background:linear-gradient(#f2a93b,#d9801f);color:#3b1c05;box-shadow:0 5px 14px rgba(0,0,0,.35)}
+.scene{width:100%;max-height:60vh;overflow:visible}
+.tag{position:absolute;left:50%;top:6%;transform:translateX(-50%);font-weight:900;font-size:clamp(20px,3vw,44px);background:var(--cream);border-radius:999px;padding:.2em .9em;box-shadow:0 8px 20px rgba(0,0,0,.35);transition:.4s;white-space:nowrap}
+.alone .zebra{animation:flee 4.5s ease-in infinite}
+@keyframes flee{0%,8%{transform:translateX(0)}100%{transform:translateX(-330px)}}
+.alone .l1{animation:chase 4.5s ease-in infinite}
+@keyframes chase{0%{transform:translateX(0)}60%{transform:translateX(150px)}100%{transform:translateX(160px)}}
+.together .zebra{animation:caught 3.5s ease-out infinite}
+@keyframes caught{0%{transform:translateX(0)}50%,100%{transform:translateX(-70px)}}
+.together .l1{animation:close1 3.5s ease-out infinite}
+@keyframes close1{0%{transform:translateX(0)}60%,100%{transform:translateX(70px)}}
+.together .l2{animation:close2 3.5s ease-out infinite}
+@keyframes close2{0%{transform:translateX(0)}60%,100%{transform:translateX(-90px)}}
+.together .l3{animation:close3 3.5s ease-out infinite}
+@keyframes close3{0%{transform:translate(0,0)}60%,100%{transform:translate(-10px,18px)}}
+.l2,.l3{transition:opacity .4s}.alone .l2,.alone .l3{opacity:0}
+.slider{width:100%;accent-color:#d9801f;height:34px}
+.readout{background:#fff;border-radius:18px;padding:1.2vh 1.2vw;font-size:clamp(16px,1.9vw,26px);text-align:center;min-height:3.6em;display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.15);color:var(--ink)}
+.cubwrap{width:min(100%,46vh);margin:0 auto;transition:transform .5s}
+.cub .spot{transition:opacity 1.5s}.cub.grown .spot{opacity:0}
+.pbar{position:relative;display:flex;justify-content:space-between;font-size:clamp(12px,1.3vw,18px);margin-top:.4vh;color:#fff;text-shadow:0 1px 6px #000;font-weight:700}
+.map path.land{fill:#e8c677;stroke:#8a5a1c;stroke-width:3;stroke-linejoin:round;stroke-dasharray:1800;stroke-dashoffset:1800;transition:stroke-dashoffset 2.4s ease-out}
+.slide.active .map path.land{stroke-dashoffset:0}
+.range{fill:#e9992a;opacity:.0;transition:opacity 1s}
+.on .range,.range.on{opacity:.78}
+.pulse{animation:pulse 1.8s infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pulse{50%{transform:scale(1.35);opacity:.6}}
+.mlabel{font-weight:900;font-size:17px;fill:#3a2a14;paint-order:stroke;stroke:#fff8e6;stroke-width:5px}
+.dial text{font-size:12px;font-weight:800;fill:#f6ecd3}
+.ringdial{fill:none;stroke-width:22;transform:rotate(-90deg);transform-origin:120px 120px}
+.zz{font-weight:900;fill:#bcd0ff;animation:zz 3s infinite;opacity:0}
+@keyframes zz{0%{opacity:0;transform:translate(0,0)}30%{opacity:1}100%{opacity:0;transform:translate(14px,-30px)}}
+.badge{position:absolute;right:0;bottom:2%;width:30%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffb2a0,#d83a2e);color:#fff;display:grid;place-items:center;text-align:center;font-weight:900;font-size:clamp(14px,2vw,28px);line-height:1.15;box-shadow:0 8px 26px rgba(0,0,0,.5);animation:bounce 3s infinite;border:4px solid #fff3d6}
+.heart{position:absolute;font-size:clamp(34px,5vw,70px);cursor:pointer;animation:beat 1.2s infinite;background:none;border:0;left:6%;bottom:6%}
+@keyframes beat{30%{transform:scale(1.25)}60%{transform:scale(1)}}
+.fh{position:absolute;pointer-events:none;font-size:30px;animation:fh 2s ease-out forwards}
+@keyframes fh{to{transform:translate(var(--x),-260px) scale(1.6);opacity:0}}
+.src a{color:#7fc2ff}.src li{list-style:none;margin:.9vh 0;font-size:clamp(14px,1.7vw,22px)}
+.src ul{padding:0}
+.big{font-size:clamp(34px,6vw,90px);font-weight:900;color:#ffd37a;line-height:1.05}
+.bubble{position:absolute;top:2%;left:50%;transform:translateX(-50%);background:#fff;color:var(--ink);font-weight:900;border-radius:26px;padding:.4em .9em;font-size:clamp(20px,3vw,44px);box-shadow:0 8px 24px rgba(0,0,0,.4);animation:bounce 2.5s infinite}
+#hud{position:fixed;bottom:2vh;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:1.4vw;z-index:10}
+#hud .pill{display:flex;align-items:center;gap:1vw;background:rgba(15,20,40,.62);backdrop-filter:blur(8px);border-radius:999px;padding:.5vh .8vw;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+#hud button{font:inherit;font-size:clamp(16px,2.2vw,28px);border:0;border-radius:999px;padding:.35em 1.1em;background:linear-gradient(#f2a93b,#d9801f);color:#3b1c05;font-weight:800}
+#hud button.sm{padding:.35em .7em;background:rgba(255,255,255,.15);color:#fff}
+#hud button:disabled{opacity:.35}
+#dots{display:flex;gap:.5vw}
+#dots b{width:clamp(9px,1.1vw,14px);aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer;transition:.3s}
+#dots b.on{background:var(--gold);transform:scale(1.35)}
+#count{color:#fff;font-size:clamp(13px,1.6vw,20px);min-width:3.6em;text-align:center}
+#notes{position:fixed;left:3vw;right:3vw;bottom:11vh;z-index:9;background:rgba(10,14,30,.9);color:#fff;border-radius:22px;padding:2vh 2vw;font-size:clamp(16px,2vw,28px);line-height:1.5;display:none;box-shadow:0 10px 40px rgba(0,0,0,.5)}
+#notes.show{display:block}
+#notes small{display:block;color:#ffd37a;font-weight:800;margin-bottom:.4vh}
+@media (min-width:821px) and (max-height:700px){.fact{font-size:clamp(15px,1.75vw,24px);padding:.8vh 1vw;margin:.8vh 0}.card{padding:2.4vh 2vw}h2{font-size:clamp(26px,3.4vw,46px)}.slide{padding-bottom:13vh}}
+@media (max-width:820px){
+ .slide:not(.title-slide){grid-template-columns:1fr;grid-template-rows:auto auto;align-content:start;gap:1.5vh;padding:2vh 4vw 16vh;overflow-y:auto}
+ .slide:not(.title-slide) .stage{order:-1;max-height:none;height:auto;min-height:0}
+ .stage>div[style*='width:min'],.cubwrap{width:min(100%,27vh)!important}
+ .scene{max-height:30vh}.pride{max-width:92vw}.readout{min-height:2.4em;font-size:15px;padding:.6vh 2vw}.btn{font-size:16px}
+ .dial{max-height:32vh!important}.tag{font-size:18px;top:0}.stage .bubble{font-size:18px;position:static;transform:none}
+ #hud button{white-space:nowrap;padding:.3em .7em}#hud .pill{gap:6px;padding:4px 6px}#dots{gap:4px}
+ .card{max-height:none;padding:2vh 4vw;overflow:visible}
+ .fact{font-size:17px;margin:.8vh 0;padding:1vh 2.5vw;gap:2.5vw}.ic{width:2em;height:2em}
+ h2{font-size:30px}.sub{font-size:24px}
+ .dots{width:60vw}.pride{gap:0}
+ #hud button{font-size:15px}#count,#dots,#bnotes{display:none}
+ .badge{width:34%}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.frag,[data-at]{opacity:1!important;transform:none!important}}
 </style>
 </head>
 <body>
-<div id="bar"></div>
+<canvas id="world" aria-hidden="true"></canvas>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+ <radialGradient id="gMane" cx="50%" cy="50%" r="55%"><stop offset="0" stop-color="#c06a1f"/><stop offset="1" stop-color="#7a3a10"/></radialGradient>
+ <radialGradient id="gMane2" cx="50%" cy="50%" r="55%"><stop offset="0" stop-color="#e08a2c"/><stop offset="1" stop-color="#a85b1c"/></radialGradient>
+ <radialGradient id="gHead" cx="45%" cy="35%" r="70%"><stop offset="0" stop-color="#ffdc8a"/><stop offset="1" stop-color="#e8a13a"/></radialGradient>
+ <radialGradient id="gHeadF" cx="45%" cy="35%" r="70%"><stop offset="0" stop-color="#f4d493"/><stop offset="1" stop-color="#d9a456"/></radialGradient>
+ <radialGradient id="gIris" cx="50%" cy="40%" r="60%"><stop offset="0" stop-color="#ffd35a"/><stop offset="1" stop-color="#b8660f"/></radialGradient>
+</defs></svg>
+
 <div id="deck">
 
-<section class="slide title-slide">
- <div class="text"><h1>האריה<br>מלך הסוואנה</h1><p class="big">מי הוא? איפה הוא גר? ומה הוא אוכל?</p></div>
- <div class="art" style="flex:none;width:min(40vw,48vh)">
- <svg viewBox="0 0 200 200" aria-label="איור פני אריה"><use href="#lionface"/></svg></div>
- <div class="grass"></div>
+<!-- 1 -->
+<section class="slide title-slide" data-note="שלום לכולם! היום אספר לכם על האריה, מלך הסוואנה. נגלה מי הוא, איפה הוא גר ומה הוא אוכל. (אפשר ללחוץ על האריה ולשמוע אותו שואג!)" data-hour="6.2">
+ <div class="stage" style="width:min(33vh,56vw)"><div class="sunhalo"></div><div class="bounce" style="width:100%"><div class="lion-slot" data-type="lion" data-label="איור פני אריה. לחיצה גורמת לו לשאוג"></div></div></div>
+ <div><h1 data-split>האריה</h1>
+ <p class="sub">מלך הסוואנה</p>
+ <div class="chips"><span class="chip frag">מי הוא?</span><span class="chip frag">איפה הוא גר?</span><span class="chip frag">מה הוא אוכל?</span></div>
+ <p class="hint">לחצו על האריה 🦁 כדי לשמוע אותו שואג</p></div>
 </section>
 
-<section class="slide">
- <div class="text"><h2>מי הוא האריה?</h2>
- <ul><li>אריה הוא חתול גדול, בן למשפחת החתולים.</li>
- <li>הזכר הבוגר שוקל בין 150 ל־225 ק״ג, ולזכר יש רעמה.</li>
- <li>האריות הם החתולים היחידים שחיים בקבוצות.</li>
- <li>לגורים יש כתמים בפרווה, והם נעלמים כשהם גדלים.</li></ul></div>
- <div class="art"><svg viewBox="0 0 200 200"><use href="#lionface"/></svg></div>
- <div class="grass"></div>
+<!-- 2 -->
+<section class="slide" data-note="אריה הוא חתול גדול. הזכר הבוגר שוקל בין 150 ל־225 ק״ג ויש לו רעמה. האריות הם החתולים היחידים שחיים בקבוצות. ולגורים יש כתמים בפרווה שנעלמים כשהם גדלים." data-hour="8.6">
+ <div class="card"><h2>מי הוא האריה?</h2>
+  <div class="fact frag"><span class="ic">🐈</span><span>אריה הוא חתול גדול, בן למשפחת החתולים.</span></div>
+  <div class="fact frag"><span class="ic">⚖️</span><span>הזכר הבוגר שוקל בין 150 ל־<span class="num" data-to="225">225</span> ק״ג, ולזכר יש רעמה.</span></div>
+  <div class="fact frag"><span class="ic">👨‍👩‍👧</span><span>האריות הם החתולים היחידים שחיים בקבוצות.</span></div>
+  <div class="fact frag"><span class="ic">🐾</span><span>לגורים יש כתמים בפרווה, והם נעלמים כשהם גדלים.</span></div></div>
+ <div class="stage"><div style="width:min(100%,58vh)" class="bounce"><div class="lion-slot" data-type="lion" data-label="איור פני אריה עם רעמה"></div></div></div>
 </section>
 
-<section class="slide">
- <div class="text"><h2>איפה האריות גרים?</h2>
- <ul><li>בסוואנה: שטחי עשב פתוחים עם עצים ושיחים.</li>
- <li>כמעט כל האריות חיים באפריקה, מדרום לסהרה.</li>
- <li>באזור קטן בהודו, ביער גיר, חיה אוכלוסייה קטנה של אריות.</li>
- <li>בג׳ונגל גשם סבוך אין אריות.</li></ul></div>
- <div class="art"><svg viewBox="0 0 300 220">
-  <circle class="sun" cx="240" cy="45" r="26" fill="#ffd23f"/>
-  <g class="sun" stroke="#ffd23f" stroke-width="4"><path d="M240 5v-0M240 85v0"/></g>
-  <rect y="150" width="300" height="70" fill="#c9d77a"/>
-  <g class="sway"><rect x="60" y="85" width="9" height="75" fill="#6b4423"/><ellipse cx="64" cy="80" rx="55" ry="16" fill="#4f7f2a"/><ellipse cx="85" cy="72" rx="35" ry="12" fill="#5d9132"/></g>
-  <g class="bob"><use href="#lionface" x="150" y="105" width="90" height="90"/></g>
-  <path d="M20 160q10-25 20 0M250 168q8-20 16 0M120 172q8-22 16 0" stroke="#6a9430" stroke-width="4" fill="none"/>
+<!-- 3 -->
+<section class="slide" data-note="האריות גרים בסוואנה, שטחי עשב פתוחים עם עצים ושיחים. כמעט כולם באפריקה, מדרום לסהרה. יש גם קבוצה קטנה בהודו, ביער גיר. בג׳ונגל גשם סבוך אין אריות." data-hour="12">
+ <div class="card"><h2>איפה האריות גרים?</h2>
+  <div class="fact frag"><span class="ic">🌾</span><span>בסוואנה: שטחי עשב פתוחים עם עצים ושיחים.</span></div>
+  <div class="fact frag"><span class="ic">🌍</span><span>כמעט כל האריות חיים באפריקה, מדרום לסהרה.</span></div>
+  <div class="fact frag"><span class="ic">🇮🇳</span><span>באזור קטן בהודו, ביער גיר, חיה אוכלוסייה קטנה של אריות.</span></div>
+  <div class="fact frag"><span class="ic">🌴</span><span>בג׳ונגל גשם סבוך אין אריות.</span></div></div>
+ <div class="stage"><svg class="map scene" viewBox="0 0 470 450" role="img" aria-label="מפה מצוירת של אפריקה עם אזורי המחיה של האריות (סימון משוער)">
+  <path class="land" d="M108 78 L132 70 L170 66 L212 88 L255 84 L287 98 L322 128 L336 160 L354 175 L398 188 L372 205 L350 222 L330 255 L340 285 L326 318 L314 358 L300 392 L255 420 L215 412 L190 372 L168 332 L158 290 L120 262 L92 232 L84 200 L62 192 L56 162 L66 120 L88 94Z" />
+  <g class="range" data-at="2"><ellipse cx="288" cy="268" rx="34" ry="52" transform="rotate(18 288 268)"/><ellipse cx="245" cy="342" rx="52" ry="40"/><ellipse cx="160" cy="180" rx="40" ry="14"/><ellipse cx="215" cy="215" rx="30" ry="14"/></g>
+  <g data-at="2"><text class="mlabel" x="245" y="348" text-anchor="middle">סוואנה</text></g>
+  <g data-at="3"><circle class="pulse" cx="436" cy="168" r="11" fill="#e0453a"/><circle cx="436" cy="168" r="5" fill="#fff"/><text class="mlabel" x="436" y="140" text-anchor="middle">הודו</text><text class="mlabel" x="436" y="198" text-anchor="middle">יער גיר</text></g>
+  <g data-at="4"><ellipse cx="218" cy="262" rx="38" ry="22" fill="#2f7d3a" opacity=".85"/><text x="218" y="270" text-anchor="middle" font-size="24">🌴✖</text><text class="mlabel" x="218" y="296" text-anchor="middle" style="font-size:13px">ג׳ונגל גשם</text></g>
+  <text x="235" y="438" text-anchor="middle" font-size="13" fill="#fff" opacity=".85">המפה מצוירת ומשוערת</text>
  </svg></div>
- <div class="grass"></div>
 </section>
 
-<section class="slide">
- <div class="text"><h2>להקת אריות</h2>
- <ul> <li>הלהקה היא משפחה: לביאות, גורים, וזכר אחד או כמה. באנגלית היא נקראת pride.</li>
- <li>בלהקה יכולים להיות מכמה אריות ועד כ־40.</li>
- <li>הלביאות נשארות בדרך כלל בלהקה כל החיים.</li></ul></div>
- <div class="art"><svg viewBox="0 0 300 200">
-  <rect y="140" width="300" height="60" fill="#e8cf8a"/>
-  <g class="bob"><use href="#lionface" x="10" y="60" width="110" height="110"/></g>
-  <g class="bob" style="animation-delay:.5s"><use href="#lioness" x="115" y="80" width="95" height="95"/></g>
-  <g class="bob" style="animation-delay:1s"><use href="#lioness" x="200" y="115" width="60" height="60"/></g>
-  <g class="bob" style="animation-delay:1.5s"><use href="#lioness" x="250" y="125" width="45" height="45"/></g>
+<!-- 4 -->
+<section class="slide" data-note="הלהקה היא משפחה: לביאות, גורים, וזכר אחד או כמה. באנגלית קוראים לה pride. יש להקות שמתחילות מכמה אריות ויכולות להגיע לכ־40. הלביאות נשארות בדרך כלל בלהקה כל החיים." data-hour="15.5">
+ <div class="card"><h2>להקת אריות</h2>
+  <div class="fact frag"><span class="ic">🏠</span><span>הלהקה היא משפחה: לביאות, גורים, וזכר אחד או כמה. באנגלית היא נקראת pride.</span></div>
+  <div class="fact frag" data-fill="1"><span class="ic">👥</span><span>בלהקה יכולים להיות מכמה אריות ועד כ־<span class="num">40</span>.</span></div>
+  <div class="fact frag"><span class="ic">💛</span><span>הלביאות נשארות בדרך כלל בלהקה כל החיים.</span></div></div>
+ <div class="stage" style="flex-direction:column"><div class="pride" style="align-items:flex-end">
+  <div style="width:30%"><div class="lion-slot" data-type="lion" data-label="אריה זכר"></div></div>
+  <div style="width:27%;animation-delay:.25s"><div class="lion-slot" data-type="lioness" data-label="לביאה"></div></div>
+  <div style="width:22%;animation-delay:.5s"><div class="lion-slot" data-type="lioness" data-label="לביאה"></div></div>
+  <div style="width:17%;animation-delay:.75s"><div class="lion-slot" data-type="cub" data-label="גור"></div></div></div>
+  <div class="dots" id="dots40" aria-hidden="true"></div><div class="pcount" id="pcount">2 ... 40</div></div>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-note="האריה אוכל רק בשר, הוא טורף. הוא צד חיות גדולות כמו זברות וגנו. רוב הציד נעשה על ידי הלביאות. וכשהן צדות יחד הן מצליחות יותר מאשר כשאריה צד לבד. תלחצו על הכפתורים ותראו!" data-hour="18.1">
+ <div class="card"><h2>מה האריה אוכל?</h2>
+  <div class="fact frag"><span class="ic">🥩</span><span>האריה אוכל בשר בלבד. הוא טורף.</span></div>
+  <div class="fact frag"><span class="ic">🦓</span><span>הוא צד חיות גדולות כמו זברות וגנו (wildebeest).</span></div>
+  <div class="fact frag"><span class="ic">♀️</span><span>את רוב הציד עושות הלביאות.</span></div>
+  <div class="fact frag"><span class="ic">🤝</span><span>כשצדים יחד, מצליחים יותר מאשר כשאריה צד לבד.</span></div></div>
+ <div class="stage" style="flex-direction:column"><div class="hunt alone" id="hunt" style="width:100%;position:relative">
+  <svg class="scene" viewBox="0 0 420 240" role="img" aria-label="הדגמה: לביאה אחת לא מצליחה לתפוס זברה, שלוש לביאות ביחד כן">
+   <ellipse cx="210" cy="225" rx="230" ry="38" fill="rgba(120,80,20,.45)"/>
+   <g opacity=".55"><ellipse cx="350" cy="118" rx="26" ry="13" fill="#6b5237"/><rect x="368" y="100" width="18" height="16" rx="6" fill="#6b5237"/><path d="M372 100l-8-12M384 100l8-12" stroke="#2b2b2b" stroke-width="3"/><path d="M332 128v22M344 128v22M358 128v22" stroke="#6b5237" stroke-width="5"/></g>
+   <g class="l3"><use href="#lionessSym" x="150" y="140" width="62" height="62"/></g>
+   <g class="zebra"><g transform="translate(205 108)">
+    <clipPath id="zc"><rect x="0" y="0" width="86" height="42" rx="18"/></clipPath>
+    <rect width="86" height="42" rx="18" fill="#fff" stroke="#222" stroke-width="3"/>
+    <g clip-path="url(#zc)" stroke="#222" stroke-width="7"><path d="M14 0v42M32 0v42M50 0v42M68 0v42"/></g>
+    <rect x="76" y="-24" width="34" height="28" rx="12" transform="rotate(18 76 -4)" fill="#fff" stroke="#222" stroke-width="3"/>
+    <path d="M84 -22v26M94 -18v26" stroke="#222" stroke-width="4"/><circle cx="102" cy="-8" r="3" fill="#222"/>
+    <path d="M14 42v32M28 42v32M62 42v32M76 42v32" stroke="#222" stroke-width="7" stroke-linecap="round"/><path d="M0 8q-18 6-16 28" stroke="#222" stroke-width="5" fill="none"/></g></g>
+   <g class="l1"><use href="#lionessSym" x="10" y="112" width="112" height="112"/></g>
+   <g class="l2"><use href="#lionessSym" x="330" y="140" width="76" height="76"/></g>
+  </svg>
+  <div class="tag" id="huntTag">לבד: לא הצליח 😕</div></div>
+  <div class="seg" role="group" aria-label="בחירת הדגמה"><button class="on" data-h="alone">אריה לבד</button><button data-h="together">ביחד</button></div></div>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-note="ללביאה נולדים בדרך כלל 1 עד 4 גורים, אחרי הריון של כ־3.5 חודשים. הגורים יונקים בערך 6 חודשים, ומתחילים לאכול בשר בגיל כ־3 חודשים. החיים בשנים הראשונות קשים ולא כל הגורים שורדים. תזיזו את הסליידר!" data-hour="19.4">
+ <div class="card"><h2>הגורים</h2>
+  <div class="fact frag"><span class="ic">🍼</span><span>ללביאה נולדים בדרך כלל <span class="num">1 עד 4</span> גורים, אחרי הריון של כ־3.5 חודשים.</span></div>
+  <div class="fact frag"><span class="ic">🥛</span><span>הגורים יונקים כ־6 חודשים, ומתחילים לאכול בשר בגיל כ־3 חודשים.</span></div>
+  <div class="fact frag"><span class="ic">🌙</span><span>החיים בשנים הראשונות קשים, ולא כל הגורים שורדים.</span></div></div>
+ <div class="stage" style="flex-direction:column;gap:1vh"><div class="cubwrap" id="cubwrap"><div class="cub lion-slot" id="cubslot" data-type="cub" data-label="איור גור אריה עם כתמים"></div></div>
+  <div style="width:min(100%,430px)"><input class="slider" id="age" type="range" min="0" max="6" step="1" value="0" aria-label="גיל הגור בחודשים">
+  <div class="pbar"><span>נולד</span><span>3 חודשים</span><span>6 חודשים</span></div>
+  <div class="readout" id="ageout">נולד! 1 עד 4 גורים אחרי הריון של כ־3.5 חודשים.</div>
+  <div style="text-align:center;margin-top:1vh"><button class="btn" id="grow">וכשהוא גדל? ✨</button></div></div></div>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-note="האריות ישנים ונחים הרבה, עד כ־21 שעות ביום. הם צדים בדרך כלל בלילה, בעיקר בשקיעה ובזריחה. הם יכולים לעבור כמה ימים בלי לשתות כי הם מקבלים נוזלים מהבשר, ואחרי ארוחה גדולה אפשר לשבוע לא לאכול. תראו איך השמיים משתנים במשך היום." data-hour="cycle">
+ <div class="card"><h2>יום בחיי אריה</h2>
+  <div class="fact frag"><span class="ic">😴</span><span>האריות ישנים ונחים הרבה, עד כ־<span class="num" data-to="21">21</span> שעות ביום.</span></div>
+  <div class="fact frag"><span class="ic">🌅</span><span>הם צדים בדרך כלל בלילה, ובעיקר בשקיעה ובזריחה.</span></div>
+  <div class="fact frag"><span class="ic">💧</span><span>הם יכולים לעבור כמה ימים בלי לשתות, כי הם מקבלים נוזלים מהבשר.</span></div>
+  <div class="fact frag"><span class="ic">🍖</span><span>אחרי ארוחה גדולה אפשר לשבוע לא לאכול.</span></div></div>
+ <div class="stage"><svg class="dial scene" viewBox="0 0 240 240" style="max-height:58vh" role="img" aria-label="שעון של 24 שעות: רוב היום האריה ישן, כ־3 שעות פעיל (המחשה)">
+  <circle cx="120" cy="120" r="108" fill="rgba(10,15,40,.72)"/>
+  <circle class="ringdial" cx="120" cy="120" r="82" stroke="#4a63c9" stroke-dasharray="450 516"/>
+  <circle class="ringdial" cx="120" cy="120" r="82" stroke="#f2a93b" stroke-dasharray="64.5 516" stroke-dashoffset="-408" />
+  <text x="120" y="28" text-anchor="middle">חצות</text><text x="120" y="222" text-anchor="middle">12:00</text><text x="218" y="124" text-anchor="middle">6:00</text><text x="22" y="124" text-anchor="middle">18:00</text>
+  <text x="30" y="58" style="fill:#ffd37a">ציד</text><text x="120" y="238" text-anchor="middle" style="font-size:9px;opacity:.8">המחשה בלבד</text>
+  <g id="hand" style="transform-origin:120px 120px"><line x1="120" y1="52" x2="120" y2="34" stroke="#fff" stroke-width="4" stroke-linecap="round"/><circle cx="120" cy="30" r="7" fill="#ffd23f" stroke="#fff" stroke-width="2"/></g>
+  <foreignObject x="75" y="75" width="90" height="90"><div xmlns="http://www.w3.org/1999/xhtml" style="width:90px"><div class="lion-slot" data-type="lioness" data-sleepy="1" data-label="לביאה ישנה"></div></div></foreignObject>
+  <text class="zz" x="168" y="86" font-size="20">Z</text><text class="zz" x="178" y="70" font-size="14" style="animation-delay:1s">z</text>
+  <text x="120" y="150" opacity="0"></text>
  </svg></div>
- <div class="grass"></div>
 </section>
 
-<section class="slide">
- <div class="text"><h2>מה האריה אוכל?</h2>
- <ul><li>האריה אוכל בשר בלבד. הוא טורף.</li>
- <li>הוא צד חיות גדולות כמו זברות וגנו (wildebeest).</li>
- <li>את רוב הציד עושות הלביאות.</li>
- <li>כשצדים יחד, מצליחים יותר מאשר כשאריה צד לבד.</li></ul></div>
- <div class="art"><svg viewBox="0 0 300 200">
-  <rect y="140" width="300" height="60" fill="#e8cf8a"/>
-  <g class="run"><g>
-   <rect x="100" y="95" width="90" height="45" rx="20" fill="#fff" stroke="#222" stroke-width="3"/>
-   <path d="M115 95v45M135 95v45M155 95v45M175 95v45" stroke="#222" stroke-width="7"/>
-   <rect x="185" y="70" width="38" height="28" rx="12" fill="#fff" stroke="#222" stroke-width="3"/>
-   <path d="M195 70v28M207 70v28" stroke="#222" stroke-width="5"/>
-   <path d="M110 140v28M130 140v28M165 140v28M180 140v28" stroke="#222" stroke-width="7" stroke-linecap="round"/>
-   <circle cx="213" cy="82" r="3"/></g></g>
-  <g class="bob"><use href="#lioness" x="5" y="70" width="100" height="100"/></g>
- </svg></div>
- <div class="grass"></div>
+<!-- 8 -->
+<section class="slide dark" data-note="אריות נעלמו מהרבה מקומות שבהם חיו פעם. הארגון הבינלאומי להגנת הטבע, IUCN, מגדיר את האריה כ״פגיע״, כלומר בסכנה. שמורות טבע ופארקים לאומיים עוזרים להגן עליהם ועל בית הגידול שלהם. אפשר ללחוץ על הלב!" data-hour="22.6">
+ <div class="card"><h2>צריך לשמור על האריות</h2>
+  <div class="fact frag"><span class="ic">🌍</span><span>אריות נעלמו מהרבה מקומות שבהם חיו פעם.</span></div>
+  <div class="fact frag"><span class="ic">⚠️</span><span>ארגון בינלאומי להגנת הטבע (IUCN) מגדיר את האריה "פגיע", כלומר בסכנה.</span></div>
+  <div class="fact frag"><span class="ic">🏞️</span><span>שמורות טבע ופארקים לאומיים עוזרים להגן עליהם ועל בית הגידול שלהם.</span></div></div>
+ <div class="stage"><div style="width:min(100%,56vh)" class="bounce"><div class="lion-slot" data-type="lion" data-label="איור פני אריה בלילה"></div></div>
+  <div class="badge frag" data-at="2">IUCN<br>פגיע</div>
+  <button class="heart" id="heart" aria-label="שלחו לב לאריות">❤️</button></div>
 </section>
 
-<section class="slide">
- <div class="text"><h2>הגורים</h2>
- <ul><li>ללביאה נולדים בדרך כלל 1 עד 4 גורים, אחרי הריון של כ־3.5 חודשים.</li>
- <li>הגורים יונקים כ־6 חודשים, ומתחילים לאכול בשר בגיל כ־3 חודשים.</li>
- <li>החיים בשנים הראשונות קשים, ולא כל הגורים שורדים.</li></ul></div>
- <div class="art"><svg viewBox="0 0 200 200">
-  <g class="bob"><use href="#cub" x="20" y="20" width="160" height="160"/></g></svg></div>
- <div class="grass"></div>
-</section>
-
-<section class="slide">
- <div class="text"><h2>יום בחיי אריה</h2>
- <ul><li>האריות ישנים ונחים הרבה, עד כ־21 שעות ביום.</li>
- <li>הם צדים בדרך כלל בלילה, ובעיקר בשקיעה ובזריחה.</li>
- <li>הם יכולים לעבור כמה ימים בלי לשתות, כי הם מקבלים נוזלים מהבשר.</li>
- <li>אחרי ארוחה גדולה אפשר לשבוע לא לאכול.</li></ul></div>
- <div class="art"><svg viewBox="0 0 300 200">
-  <circle class="sun" cx="70" cy="60" r="30" fill="#ffd23f"/>
-  <text x="200" y="50" font-size="30" class="bob" fill="#555">Z z z</text>
-  <rect y="140" width="300" height="60" fill="#e8cf8a"/>
-  <ellipse cx="170" cy="140" rx="90" ry="32" fill="#e0a64a"/>
-  <circle cx="90" cy="130" r="38" fill="#b86a22"/><circle cx="90" cy="135" r="26" fill="#f0bd5c"/>
-  <path d="M78 133q6 6 12 0M95 133q6 6 12 0" stroke="#222" stroke-width="3" fill="none"/>
-  <ellipse cx="90" cy="145" rx="6" ry="4" fill="#5a2d13"/></svg></div>
- <div class="grass"></div>
-</section>
-
-<section class="slide">
- <div class="text"><h2>צריך לשמור על האריות</h2>
- <ul><li>אריות נעלמו מהרבה מקומות שבהם חיו פעם.</li>
- <li>ארגון בינלאומי להגנת הטבע (IUCN) מגדיר את האריה "פגיע", כלומר בסכנה.</li>
- <li>שמורות טבע ופארקים לאומיים עוזרים להגן עליהם ועל בית הגידול שלהם.</li></ul></div>
- <div class="art"><svg viewBox="0 0 200 200">
-  <g class="bob"><use href="#lionface" x="30" y="30" width="140" height="140"/></g>
-  <path d="M100 185c-40-30-60-50-60-70a30 30 0 0160-10 30 30 0 0160 10c0 20-20 40-60 70z" transform="translate(0 -30) scale(.4) translate(150 40)" fill="#e0453a"/></svg></div>
- <div class="grass"></div>
-</section>
-
-<section class="slide">
- <div class="text src"><h2>מקורות</h2>
+<!-- 9 -->
+<section class="slide dark" data-note="תודה רבה שהקשבתם! עכשיו אפשר לשאול אותי שאלות. המקורות שלי כתובים כאן." data-hour="23.4">
+ <div class="card src"><div class="big">תודה! 🦁</div><h2 style="margin-top:1vh">מקורות</h2>
  <ul>
- <li><a href="https://www.nationalzoo.si.edu/animals/lion">Smithsonian's National Zoo – Lion</a></li>
- <li><a href="https://animals.sandiegozoo.org/animals/lion">San Diego Zoo – Lion</a></li>
- <li><a href="https://animaldiversity.org/accounts/Panthera_leo/">Animal Diversity Web – Panthera leo</a></li>
- <li><a href="https://www.nationalgeographic.com/animals/mammals/facts/african-lion">National Geographic – African lion</a></li>
- <li><a href="https://www.bbcearth.com/factfiles/animals/mammals/lion">BBC Earth – Lion</a></li>
- <li><a href="https://ielc.libguides.com/sdzg/factsheets/lions/summary">San Diego Zoo Global fact sheet – Lions</a></li></ul>
- <p style="font-size:clamp(13px,1.6vw,20px)">המצגת היא גרסה ראשונה. האיורים נוצרו במיוחד למצגת.</p></div>
- <div class="grass"></div>
+ <li><a href="https://www.nationalzoo.si.edu/animals/lion" target="_blank" rel="noopener">Smithsonian's National Zoo – Lion</a></li>
+ <li><a href="https://animals.sandiegozoo.org/animals/lion" target="_blank" rel="noopener">San Diego Zoo – Lion</a></li>
+ <li><a href="https://animaldiversity.org/accounts/Panthera_leo/" target="_blank" rel="noopener">Animal Diversity Web – Panthera leo</a></li>
+ <li><a href="https://www.nationalgeographic.com/animals/mammals/facts/african-lion" target="_blank" rel="noopener">National Geographic – African lion</a></li>
+ <li><a href="https://www.bbcearth.com/factfiles/animals/mammals/lion" target="_blank" rel="noopener">BBC Earth – Lion</a></li>
+ <li><a href="https://ielc.libguides.com/sdzg/factsheets/lions/summary" target="_blank" rel="noopener">San Diego Zoo Global fact sheet – Lions</a></li></ul>
+ <p style="font-size:clamp(13px,1.5vw,19px);opacity:.8;margin-top:1vh">האיורים והאנימציות נוצרו במיוחד למצגת.</p></div>
+ <div class="stage"><div class="bubble">יש שאלות? 🙋</div><div style="width:min(100%,50vh);margin-top:8%" class="bounce"><div class="lion-slot" data-type="lion" data-label="איור פני אריה"></div></div></div>
 </section>
 </div>
 
-<div id="nav"><button id="next">הבא ←</button><span id="count" dir="ltr"></span><button id="prev">→ הקודם</button></div>
+<div id="notes" role="note"><small>מה אומרים בשקף</small><span id="notetext"></span></div>
+<div id="hud"><div class="pill">
+ <button id="next" aria-label="הבא">הבא ←</button><div id="dots"></div><span id="count" dir="ltr"></span><button id="prev" aria-label="הקודם">→ הקודם</button>
+ <button class="sm" id="bnotes" title="הערות למציג (N)" aria-label="הערות למציג">📝</button><button class="sm" id="bfs" title="מסך מלא (F)" aria-label="מסך מלא">⛶</button><button class="sm" id="bsound" title="צלילים" aria-label="הפעל או כבה צלילים">🔊</button></div></div>
 
-<svg width="0" height="0" style="position:absolute"><defs>
- <symbol id="lionface" viewBox="0 0 200 200">
-  <g class="sway"><circle cx="100" cy="100" r="92" fill="#a85b1c"/><circle cx="100" cy="100" r="78" fill="#c9792c"/></g>
-  <circle cx="45" cy="45" r="20" fill="#e9a23b"/><circle cx="155" cy="45" r="20" fill="#e9a23b"/>
-  <circle cx="45" cy="45" r="10" fill="#f5c9a0"/><circle cx="155" cy="45" r="10" fill="#f5c9a0"/>
-  <circle cx="100" cy="105" r="58" fill="#f0bd5c"/>
-  <g class="blink"><ellipse cx="78" cy="92" rx="8" ry="10" fill="#fff"/><ellipse cx="122" cy="92" rx="8" ry="10" fill="#fff"/>
-  <circle cx="79" cy="94" r="5" fill="#3a2a14"/><circle cx="121" cy="94" r="5" fill="#3a2a14"/></g>
-  <ellipse cx="100" cy="118" rx="22" ry="17" fill="#f8dca0"/>
-  <path d="M88 108h24l-12 14z" fill="#5a2d13"/>
-  <path d="M100 122v10M100 132q-10 10-20 3M100 132q10 10 20 3" stroke="#5a2d13" stroke-width="3" fill="none" stroke-linecap="round"/>
- </symbol>
- <symbol id="lioness" viewBox="0 0 200 200">
-  <circle cx="45" cy="50" r="22" fill="#e9a23b"/><circle cx="155" cy="50" r="22" fill="#e9a23b"/>
-  <circle cx="45" cy="50" r="11" fill="#f5c9a0"/><circle cx="155" cy="50" r="11" fill="#f5c9a0"/>
-  <circle cx="100" cy="108" r="66" fill="#e6b04f"/>
-  <ellipse cx="78" cy="95" rx="8" ry="10" fill="#fff"/><ellipse cx="122" cy="95" rx="8" ry="10" fill="#fff"/>
-  <circle cx="79" cy="97" r="5" fill="#3a2a14"/><circle cx="121" cy="97" r="5" fill="#3a2a14"/>
-  <ellipse cx="100" cy="124" rx="24" ry="18" fill="#f8dca0"/>
-  <path d="M88 114h24l-12 14z" fill="#5a2d13"/>
-  <path d="M100 128v10M100 138q-10 10-20 3M100 138q10 10 20 3" stroke="#5a2d13" stroke-width="3" fill="none" stroke-linecap="round"/>
- </symbol>
- <symbol id="cub" viewBox="0 0 200 200">
-  <circle cx="45" cy="55" r="26" fill="#e9a23b"/><circle cx="155" cy="55" r="26" fill="#e9a23b"/>
-  <circle cx="45" cy="55" r="13" fill="#f5c9a0"/><circle cx="155" cy="55" r="13" fill="#f5c9a0"/>
-  <circle cx="100" cy="112" r="72" fill="#f0c36a"/>
-  <g fill="#c9922f"><circle cx="70" cy="60" r="5"/><circle cx="100" cy="50" r="5"/><circle cx="130" cy="60" r="5"/><circle cx="60" cy="140" r="4"/><circle cx="140" cy="140" r="4"/></g>
-  <ellipse cx="74" cy="98" rx="13" ry="15" fill="#fff"/><ellipse cx="126" cy="98" rx="13" ry="15" fill="#fff"/>
-  <circle cx="76" cy="101" r="8" fill="#3a2a14"/><circle cx="124" cy="101" r="8" fill="#3a2a14"/>
-  <circle cx="79" cy="97" r="3" fill="#fff"/><circle cx="127" cy="97" r="3" fill="#fff"/>
-  <ellipse cx="100" cy="132" rx="22" ry="16" fill="#f8dca0"/>
-  <path d="M90 122h20l-10 12z" fill="#c4607a"/>
-  <path d="M100 134v8M100 142q-9 8-18 2M100 142q9 8 18 2" stroke="#5a2d13" stroke-width="3" fill="none" stroke-linecap="round"/>
- </symbol>
-</defs></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="lionessSym" viewBox="0 0 200 200"><g id="lionessG"></g></symbol></defs></svg>
 
 <script>
-const slides=[...document.querySelectorAll('.slide')];let i=0;
-function show(n){i=Math.max(0,Math.min(slides.length-1,n));
- slides.forEach((s,k)=>{s.classList.toggle('active',k===i);s.classList.toggle('past',k<i)});
- count.textContent=(i+1)+' / '+slides.length;prev.disabled=i===0;next.disabled=i===slides.length-1;
- bar.style.width=((i+1)/slides.length*100)+'%';location.hash=i+1}
-next.onclick=()=>show(i+1);prev.onclick=()=>show(i-1);
-addEventListener('keydown',e=>{if(['ArrowLeft','PageDown',' '].includes(e.key))show(i+1);if(['ArrowRight','PageUp'].includes(e.key))show(i-1)});
-let x0;addEventListener('touchstart',e=>x0=e.touches[0].clientX);
-addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-x0;if(Math.abs(d)>50)show(d<0?i+1:i-1)});
-show((parseInt(location.hash.slice(1))||1)-1);
+/* ---------- lion faces ---------- */
+function petals(n,len,off,fill,delay0){let s='';for(let i=0;i<n;i++){const a=i*360/n+off;
+ s+=`<g transform="rotate(${a.toFixed(1)} 100 100)"><g class="petal" style="--d:${((i*0.37+delay0)%3.6).toFixed(2)}"><path d="M100 ${100-len} C121 ${100-len+24} 121 ${100-len+58} 100 ${100-len+84} C79 ${100-len+58} 79 ${100-len+24} 100 ${100-len}Z" fill="${fill}"/></g></g>`}return s}
+function face(type){
+ const mane=type==='lion'?petals(22,94,0,'url(#gMane)',0)+petals(18,78,10,'url(#gMane2)',1):'';
+ const cub=type==='cub',les=type==='lioness';
+ const headR=cub?[62,58]:[56,54];
+ const ears=`<circle cx="${cub?44:50}" cy="${cub?52:54}" r="${cub?27:22}" fill="#e8a13a"/><circle cx="${cub?156:150}" cy="${cub?52:54}" r="${cub?27:22}" fill="#e8a13a"/><circle cx="${cub?44:50}" cy="${cub?52:54}" r="${cub?14:11}" fill="#f6b9a4"/><circle cx="${cub?156:150}" cy="${cub?52:54}" r="${cub?14:11}" fill="#f6b9a4"/>`;
+ const spots=cub?`<g class="spot" fill="#b9751f" opacity=".75">${[[70,62],[100,52],[130,62],[56,96],[144,96],[64,142],[136,142],[86,70],[114,70]].map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="${4+(p[0]%3)}"/>`).join('')}</g>`:'';
+ const er=cub?[13,15,8]:[9,11,5.5],ey=cub?100:94;
+ const eye=(cx)=>`<g class="eye"><ellipse cx="${cx}" cy="${ey}" rx="${er[0]}" ry="${er[1]}" fill="#fff"/><g class="pupil"><circle cx="${cx}" cy="${ey+1}" r="${er[2]+1.5}" fill="url(#gIris)"/><circle cx="${cx}" cy="${ey+1}" r="${er[2]-1.5}" fill="#1b1208"/><circle cx="${cx+2}" cy="${ey-2}" r="2" fill="#fff"/></g></g>`;
+ const my=cub?132:126;
+ return `<g class="mane">${mane}</g>${ears}
+ <ellipse cx="100" cy="${cub?112:108}" rx="${headR[0]}" ry="${headR[1]}" fill="url(#${les?'gHeadF':'gHead'})"/>${spots}
+ <path d="M70 ${ey-14}q8-8 18-2M130 ${ey-14}q-8-8-18-2" stroke="#9a5a14" stroke-width="4" fill="none" stroke-linecap="round" opacity=".7"/>
+ ${eye(76)}${eye(124)}
+ <ellipse cx="88" cy="${my}" rx="18" ry="14" fill="#fff0c8"/><ellipse cx="112" cy="${my}" rx="18" ry="14" fill="#fff0c8"/>
+ <path d="M87 ${my-14}h26l-13 15z" fill="${cub?'#c4607a':'#6a3318'}"/>
+ <g class="mclosed" stroke="#6a3318" stroke-width="3" fill="none" stroke-linecap="round"><path d="M100 ${my+1}v9M100 ${my+10}q-9 9-20 2M100 ${my+10}q9 9 20 2"/></g>
+ <g class="mopen"><ellipse cx="100" cy="${my+16}" rx="19" ry="22" fill="#6e1522"/><ellipse cx="100" cy="${my+26}" rx="11" ry="8" fill="#e0707a"/><path d="M84 ${my+2}l5 12 5-12M106 ${my+2}l5 12 5-12" fill="#fff"/></g>
+ <g fill="#a86a2a" opacity=".6"><circle cx="72" cy="${my+2}" r="1.6"/><circle cx="66" cy="${my+8}" r="1.6"/><circle cx="76" cy="${my+8}" r="1.6"/><circle cx="128" cy="${my+2}" r="1.6"/><circle cx="134" cy="${my+8}" r="1.6"/><circle cx="124" cy="${my+8}" r="1.6"/></g>`}
+const SVGNS='http://www.w3.org/2000/svg';
+document.querySelectorAll('.lion-slot').forEach(el=>{
+ const t=el.dataset.type;
+ el.innerHTML=`<svg class="lion${el.dataset.sleepy?' sleepy':''}" viewBox="${t==='lion'?'0 0 200 200':'8 8 184 184'}" role="img" aria-label="${el.dataset.label||'אריה'}">${face(t)}</svg>`;
+});
+document.getElementById('lionessG').innerHTML=face('lioness');
+
+/* ---------- sound ---------- */
+let AC,muted=false;
+function roarSound(){if(muted)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const t=AC.currentTime;
+ const g=AC.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.55,t+.15);g.gain.exponentialRampToValueAtTime(.001,t+1.8);
+ const lp=AC.createBiquadFilter();lp.type='lowpass';lp.frequency.setValueAtTime(1000,t);lp.frequency.exponentialRampToValueAtTime(220,t+1.8);
+ const o=AC.createOscillator();o.type='sawtooth';o.frequency.setValueAtTime(100,t);o.frequency.exponentialRampToValueAtTime(46,t+1.8);
+ const l=AC.createOscillator();l.frequency.value=27;const lg=AC.createGain();lg.gain.value=16;l.connect(lg);lg.connect(o.frequency);
+ const nb=AC.createBuffer(1,AC.sampleRate*2,AC.sampleRate),d=nb.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+ const ns=AC.createBufferSource();ns.buffer=nb;const bp=AC.createBiquadFilter();bp.type='bandpass';bp.frequency.value=420;const ng=AC.createGain();ng.gain.value=.5;
+ o.connect(lp);ns.connect(bp);bp.connect(ng);ng.connect(lp);lp.connect(g);g.connect(AC.destination);
+ o.start(t);l.start(t);ns.start(t);o.stop(t+1.9);l.stop(t+1.9);ns.stop(t+1.9)}catch(e){}}
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function roar(svg){if(svg.classList.contains('roaring'))return;svg.classList.add('roaring');roarSound();
+ const st=svg.closest('.stage');if(st&&!reduce){for(let k=0;k<3;k++){const r=document.createElement('div');r.className='ring';r.style.animationDelay=k*.25+'s';st.appendChild(r);setTimeout(()=>r.remove(),2200)}}
+ if(!reduce){deck.classList.add('shake');setTimeout(()=>deck.classList.remove('shake'),650)}
+ setTimeout(()=>svg.classList.remove('roaring'),1400)}
+document.querySelectorAll('svg.lion').forEach(s=>{if(s.classList.contains('sleepy')||s.closest('.cub'))return;s.addEventListener('click',()=>roar(s))});
+
+/* eyes follow pointer, wander when idle */
+const pupils=[...document.querySelectorAll('.pupil')];let px=null,py=null,lastMove=0;
+addEventListener('pointermove',e=>{px=e.clientX;py=e.clientY;lastMove=performance.now()});
+function eyes(t){pupils.forEach(p=>{const svg=p.ownerSVGElement;if(svg.classList.contains('sleepy'))return;const r=svg.getBoundingClientRect();if(!r.width)return;
+ let dx,dy;if(px!==null&&t-lastMove<4000){dx=px-(r.left+r.width/2);dy=py-(r.top+r.height/2);const m=Math.hypot(dx,dy)||1;const k=Math.min(1,m/(r.width*.8));dx=dx/m*k;dy=dy/m*k}
+ else{const s=t/1000+r.left;dx=Math.sin(s*.7);dy=Math.sin(s*.45)*.5}
+ p.style.transform=`translate(${(dx*4).toFixed(2)}px,${(dy*3).toFixed(2)}px)`})}
+
+/* ---------- the world (canvas) ---------- */
+const cv=document.getElementById('world'),cx=cv.getContext('2d');let W,H,DPR;
+function resize(){DPR=Math.min(devicePixelRatio||1,1.5);W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;cx.setTransform(DPR,0,0,DPR,0,0)}
+addEventListener('resize',resize);resize();
+const hx=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+const KEYS=[[0,'#070b1f','#1b2347','#1a2140','#121830','#0b1022','#0e1428','#080d1c'],[5,'#1b2350','#6a4d7a','#3a3a62','#2b2c50','#1c1d3a','#25263f','#14152b'],[6.5,'#4a6fb5','#ffb277','#b97d86','#8d6a73','#5a4a55','#a68757','#5a6b35'],[9,'#4aa3e0','#bfe7f5','#8fb8b0','#77a36a','#5c8a3c','#d8bd72','#4f7d2b'],[12,'#2f8fe0','#aee0f7','#86b5a8','#6fa05f','#548a34','#e0c576','#4a7a28'],[16,'#3d93d8','#cfe8ee','#96b79f','#7da25a','#5e8a33','#dfbd6a','#4e7a2a'],[18,'#4b5fa8','#ffb347','#c2765f','#9a6a4a','#6b4a2e','#c98f45','#5a5a22'],[19.5,'#2a2d6b','#e0605a','#7a4a68','#55385a','#34284a','#6a4a50','#2c2338'],[21,'#0f1438','#3b2e66','#2b2a55','#1e2045','#14173a','#1b1f3f','#0c1030'],[24,'#070b1f','#1b2347','#1a2140','#121830','#0b1022','#0e1428','#080d1c']].map(k=>[k[0],...k.slice(1).map(hx)]);
+const mix=(a,b,t)=>a+(b-a)*t;
+function pal(h){const hh=((h%24)+24)%24;let k=0;while(k<KEYS.length-2&&KEYS[k+1][0]<=hh)k++;const a=KEYS[k],b=KEYS[k+1],t=(hh-a[0])/(b[0]-a[0]);
+ const o=[];for(let i=1;i<=7;i++)o.push(a[i].map((v,j)=>Math.round(mix(v,b[i][j],t))));return o}
+const rgb=c=>`rgb(${c[0]},${c[1]},${c[2]})`;
+const rgbm=(c,k)=>`rgb(${c.map(v=>Math.round(v*k))})`;
+function night(h){const x=((h%24)+24)%24;if(x<5||x>=20.5)return 1;if(x<7)return 1-(x-5)/2;if(x<18.5)return 0;return(x-18.5)/2}
+let hour=6.2,target=6.2,cam=0,camT=0,cycle=null,seed=7;
+const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647};
+const stars=Array.from({length:150},()=>({x:rnd(),y:rnd()*.6,r:rnd()*1.5+.4,p:rnd()*6}));
+const trees=Array.from({length:14},(_,i)=>({x:i*330+rnd()*200,s:.7+rnd()*.7,l:rnd()*30}));
+const clouds=Array.from({length:6},(_,i)=>({x:rnd()*2000,y:.08+rnd()*.25,s:.6+rnd()*1,v:6+rnd()*10}));
+const motes=Array.from({length:40},()=>({x:rnd(),y:rnd()*.5+.45,p:rnd()*6,v:.2+rnd()*.5}));
+const birds=Array.from({length:5},(_,i)=>({x:i*60,y:.2+i*.025,p:i}));
+function ridge(base,amp,freq,par,sd,col){cx.beginPath();cx.moveTo(0,H);for(let x=0;x<=W+10;x+=10){const u=(x+cam*par)*freq;const y=H*base-amp*H*(Math.sin(u+sd)*.5+Math.sin(u*2.3+sd*2)*.3+Math.sin(u*5.1+sd)*.1);cx.lineTo(x,y)}cx.lineTo(W,H);cx.fillStyle=col;cx.fill()}
+function acacia(x,y,s,col){cx.fillStyle=col;cx.strokeStyle=col;cx.lineCap='round';
+ cx.lineWidth=7*s;cx.beginPath();cx.moveTo(x,y);cx.quadraticCurveTo(x+6*s,y-50*s,x-4*s,y-95*s);cx.stroke();
+ cx.lineWidth=4*s;cx.beginPath();cx.moveTo(x-4*s,y-80*s);cx.lineTo(x-48*s,y-108*s);cx.moveTo(x-3*s,y-85*s);cx.lineTo(x+44*s,y-112*s);cx.stroke();
+ for(const [dx,dy,rx,ry] of [[-4,-118,78,13],[-52,-110,46,9],[46,-114,48,10],[-20,-128,44,9]]){cx.beginPath();cx.ellipse(x+dx*s,y+dy*s,rx*s,ry*s,0,0,6.3);cx.fill()}}
+function draw(t){
+ const P=pal(hour),N=night(hour),hh=((hour%24)+24)%24;
+ const g=cx.createLinearGradient(0,0,0,H*.75);g.addColorStop(0,rgb(P[0]));g.addColorStop(1,rgb(P[1]));cx.fillStyle=g;cx.fillRect(0,0,W,H);
+ if(N>0){for(const s of stars){cx.globalAlpha=N*(.5+.5*Math.sin(t*1.5+s.p));cx.fillStyle='#fff';cx.beginPath();cx.arc(s.x*W,s.y*H,s.r,0,6.3);cx.fill()}cx.globalAlpha=1}
+ const gy=H*.74;
+ const sp=(hh-5.5)/13;
+ if(sp>=0&&sp<=1){const sx=W*(.08+.84*sp),sy=gy+20-Math.sin(Math.PI*sp)*gy*.82,k=Math.pow(Math.min(1,Math.abs(hh-12)/6.5),1.4);
+  const sc=[Math.round(mix(255,255,k)),Math.round(mix(244,140,k)),Math.round(mix(180,50,k))];const R=Math.min(W,H)*.075;
+  const rg=cx.createRadialGradient(sx,sy,R*.5,sx,sy,H*.6);rg.addColorStop(0,`rgba(${sc},.65)`);rg.addColorStop(1,`rgba(${sc},0)`);cx.fillStyle=rg;cx.fillRect(0,0,W,H);
+  cx.fillStyle=`rgb(${sc})`;cx.beginPath();cx.arc(sx,sy,R,0,6.3);cx.fill()}
+ const mp=((hh+24-18.5)%24)/11;
+ if(mp>=0&&mp<=1){const mx=W*(.1+.8*mp),my=gy-Math.sin(Math.PI*mp)*gy*.78,R=Math.min(W,H)*.055;
+  const rg=cx.createRadialGradient(mx,my,R*.6,mx,my,R*5);rg.addColorStop(0,'rgba(200,215,255,.35)');rg.addColorStop(1,'rgba(200,215,255,0)');cx.fillStyle=rg;cx.fillRect(mx-R*6,my-R*6,R*12,R*12);
+  cx.fillStyle='#f6f2dc';cx.beginPath();cx.arc(mx,my,R,0,6.3);cx.fill();cx.fillStyle='rgba(150,150,140,.35)';for(const [a,b,r] of [[-.3,-.2,.18],[.25,.15,.25],[-.1,.4,.12]]){cx.beginPath();cx.arc(mx+a*R,my+b*R,r*R,0,6.3);cx.fill()}}
+ const cl=1-N*.85;if(cl>.05)for(const c of clouds){const x=((c.x+t*c.v-cam*.08)%(W+500)+W+500)%(W+500)-250,y=c.y*H;cx.fillStyle=`rgba(${P[1].map(v=>Math.min(255,v+40))},${.55*cl})`;for(const [dx,dy,r] of [[0,0,40],[40,6,32],[-38,8,30],[14,-14,30]]){cx.beginPath();cx.ellipse(x+dx*c.s,y+dy*c.s,r*c.s*1.5,r*c.s*.7,0,0,6.3);cx.fill()}}
+ if(N<.8)for(const b of birds){const x=((W+300-(t*45+b.x*3))%(W+400)+W+400)%(W+400)-100,y=H*b.y+Math.sin(t+b.p)*10+b.x*.2,f=Math.sin(t*9+b.p)*7;cx.strokeStyle=`rgba(40,30,30,${.7*(1-N)})`;cx.lineWidth=2;cx.beginPath();cx.moveTo(x-12,y-f);cx.quadraticCurveTo(x-5,y-4,x,y);cx.quadraticCurveTo(x+5,y-4,x+12,y-f);cx.stroke()}
+ ridge(.60,.09,.0032,.12,1.3,rgb(P[2]));
+ ridge(.67,.07,.0052,.28,4.1,rgb(P[3]));
+ const span=W+700;for(const tr of trees){const x=((tr.x-cam*.5)%span+span)%span-300;acacia(x,H*.7+tr.l*.2,tr.s*.5*(H/700),rgbm(P[3],.7))}
+ ridge(.73,.035,.0075,.5,2.2,rgb(P[4]));
+ for(const tr of trees){if(tr.s<.95)continue;const x=((tr.x*1.7-cam*.85)%span+span)%span-300;acacia(x,H*.78,tr.s*.95*(H/700),rgbm(P[4],.45))}
+ const gg=cx.createLinearGradient(0,gy,0,H);gg.addColorStop(0,rgb(P[5]));gg.addColorStop(1,rgbm(P[5],.7));cx.fillStyle=gg;cx.fillRect(0,gy+H*.01,W,H);
+ for(const m of motes){const x=((m.x*W+t*12*m.v-cam*.9)%W+W)%W,y=m.y*H+Math.sin(t*m.v+m.p)*18;
+  if(N>.4){const a=N*(.5+.5*Math.sin(t*2+m.p));cx.fillStyle=`rgba(200,255,120,${a})`;cx.beginPath();cx.arc(x,y,2.4,0,6.3);cx.fill();cx.fillStyle=`rgba(200,255,120,${a*.25})`;cx.beginPath();cx.arc(x,y,8,0,6.3);cx.fill()}
+  else if(N<.3&&hh>15){cx.fillStyle=`rgba(255,220,140,${.5*(1-N)})`;cx.beginPath();cx.arc(x,y,1.8,0,6.3);cx.fill()}}
+ for(let row=0;row<2;row++){const col=row?rgb(P[6]):rgbm(P[6],1.35);cx.fillStyle=col;cx.beginPath();cx.moveTo(0,H);const step=row?15:22,hgt=row?H*.075:H*.045,par=row?1.3:.9;
+  for(let x=-20;x<W+30;x+=step){const u=x+((cam*par)%step);const sw=Math.sin(t*1.7+u*.03+row)*(row?9:5)+Math.sin(t*.6+u*.01)*4;const h2=hgt*(.6+.5*Math.abs(Math.sin(u*.7)));cx.lineTo(x-6,H-(row?0:H*.1)+(row?0:0));cx.quadraticCurveTo(x+sw*.4,H-h2*(row?1:.5)-(row?0:H*.1)+H*(row?.0:.0),x+sw,H-h2-(row?0:H*.1)-(row?0:0));cx.lineTo(x+6,H-(row?0:H*.1))}
+  cx.lineTo(W,H);cx.fill()}
+ /* warm/cool vignette */
+ const v=cx.createRadialGradient(W/2,H/2,H*.4,W/2,H/2,H*.95);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,`rgba(0,0,0,${.18+N*.25})`);cx.fillStyle=v;cx.fillRect(0,0,W,H)}
+let last=performance.now();
+function loop(now){const dt=Math.min(.1,(now-last)/1000);last=now;
+ if(cycle){const p=Math.min(1,(now-cycle.t0)/cycle.dur);const e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;hour=cycle.from+24*(.1*p+.9*e);if(p>=1){cycle=null;target=hour}}
+ else{const d=((target-hour+36)%24)-12;hour+=reduce?d:d*Math.min(1,dt*2.2)}
+ cam+=(camT-cam)*(reduce?1:Math.min(1,dt*2.2));
+ if(!document.hidden){draw(now/1000);eyes(now);hand()}
+ requestAnimationFrame(loop)}
+function hand(){const h=document.getElementById('hand');if(h.closest('.slide').classList.contains('active'))h.style.transform=`rotate(${(((hour%24)+24)%24)/24*360}deg)`}
+
+/* ---------- deck logic ---------- */
+const deck=document.getElementById('deck');
+const slides=[...document.querySelectorAll('.slide')];let i=0;const steps=slides.map(()=>0);
+slides.forEach(s=>{s.fr=[...s.querySelectorAll('.frag')].filter(f=>!f.hasAttribute('data-at'));s.fr.forEach((f,k)=>f.dataset.at=k+1);s.max=Math.max(0,...[...s.querySelectorAll('[data-at]')].map(e=>+e.dataset.at))});
+document.querySelectorAll('[data-split]').forEach(h=>{h.innerHTML=[...h.textContent].map((c,k)=>`<span style="--i:${k}">${c}</span>`).join('')});
+const dotsEl=document.getElementById('dots');slides.forEach((_,k)=>{const b=document.createElement('b');b.onclick=()=>go(k,0);b.setAttribute('role','button');b.setAttribute('aria-label','שקף '+(k+1));dotsEl.appendChild(b)});
+function applyStep(s,n,instant){slides[s].querySelectorAll('[data-at]').forEach(e=>{const on=+e.dataset.at<=n;if(on&&!e.classList.contains('on')){e.classList.add('on');onReveal(e)}if(!on)e.classList.remove('on')})}
+function countUp(el){const to=+el.dataset.to;if(reduce){el.textContent=to;return}const t0=performance.now();(function f(n){const p=Math.min(1,(n-t0)/1200);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})(t0)}
+function fillDots(){const d=[...document.querySelectorAll('#dots40 i')],c=document.getElementById('pcount');d.forEach(x=>x.classList.remove('f'));let n=0;clearInterval(fillDots.t);fillDots.t=setInterval(()=>{if(n<40){d[n++].classList.add('f');c.textContent=n+(n<40?'':' - להקה גדולה!')}else clearInterval(fillDots.t)},reduce?1:55)}
+function onReveal(e){e.querySelectorAll('.num[data-to]').forEach(countUp);if(e.dataset.fill)fillDots()}
+const dots40=document.getElementById('dots40');for(let k=0;k<40;k++)dots40.appendChild(document.createElement('i'));
+function show(n,step){i=Math.max(0,Math.min(slides.length-1,n));
+ slides.forEach((s,k)=>{s.classList.toggle('active',k===i);s.classList.toggle('past',k<i);s.inert=k!==i;s.setAttribute('aria-hidden',k!==i)});
+ slides[i].classList.toggle('dark',slides[i].classList.contains('dark'));
+ steps[i]=step;applyStep(i,step);
+ document.getElementById('count').textContent=(i+1)+' / '+slides.length;
+ prev.disabled=i===0&&steps[0]===0;next.disabled=i===slides.length-1&&steps[i]>=slides[i].max;
+ [...dotsEl.children].forEach((b,k)=>b.classList.toggle('on',k===i));
+ notetext.textContent=slides[i].dataset.note;
+ camT=i*330;const hs=slides[i].dataset.hour;
+ if(hs==='cycle'){cycle={t0:performance.now(),dur:reduce?1:24000,from:((hour%24)+24)%24}}else{cycle=null;target=+hs}
+ history.replaceState(null,'','#'+(i+1))}
+function go(n,step){show(n,step)}
+function advance(){if(steps[i]<slides[i].max){steps[i]++;applyStep(i,steps[i]);show2()}else if(i<slides.length-1)show(i+1,0)}
+function back(){if(steps[i]>0){steps[i]--;applyStep(i,steps[i]);show2()}else if(i>0)show(i-1,slides[i-1].max)}
+function show2(){prev.disabled=i===0&&steps[0]===0;next.disabled=i===slides.length-1&&steps[i]>=slides[i].max}
+next.onclick=advance;prev.onclick=back;
+addEventListener('keydown',e=>{if(e.target.matches('input[type=range]')&&['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key))return;
+ if(['ArrowLeft','PageDown','Enter'].includes(e.key)||(e.key===' '&&!e.target.closest('button'))){e.preventDefault();advance()}
+ else if(['ArrowRight','PageUp','Backspace'].includes(e.key)){e.preventDefault();back()}
+ else if(e.key==='Home')show(0,0);else if(e.key==='End')show(slides.length-1,slides[slides.length-1].max);
+ else if(e.key==='f'||e.key==='F'||e.key==='כ')toggleFs();else if(e.key==='n'||e.key==='N'||e.key==='ב')notes.classList.toggle('show')});
+let x0,y0,tgt;addEventListener('touchstart',e=>{tgt=e.target;x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+addEventListener('touchend',e=>{if(tgt&&tgt.closest('input,button,a'))return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)dx<0?advance():back()},{passive:true});
+function toggleFs(){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()}
+bfs.onclick=toggleFs;bnotes.onclick=()=>notes.classList.toggle('show');
+bsound.onclick=()=>{muted=!muted;bsound.textContent=muted?'🔇':'🔊'};
+
+/* slide 5: hunt toggle */
+const hunt=document.getElementById('hunt'),ht=document.getElementById('huntTag');
+document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.seg button').forEach(x=>x.classList.toggle('on',x===b));const tg=b.dataset.h==='together';hunt.classList.toggle('together',tg);hunt.classList.toggle('alone',!tg);ht.textContent=tg?'ביחד: הצלחה! 🎉':'לבד: לא הצליח 😕'});
+/* slide 6: cub */
+const age=document.getElementById('age'),ao=document.getElementById('ageout'),cw=document.getElementById('cubwrap'),cs=document.getElementById('cubslot');
+const AGE=['נולד! 1 עד 4 גורים אחרי הריון של כ־3.5 חודשים.','חודש: הגור יונק חלב אמא.','חודשיים: ממשיך לינוק ולגדול.','3 חודשים: מתחיל לאכול בשר, וממשיך לינוק.','4 חודשים: יונק ואוכל גם קצת בשר.','5 חודשים: כמעט גמול מהנקה.','6 חודשים: בערך בגיל הזה מסיימים לינוק.'];
+age.oninput=()=>{const v=+age.value;ao.textContent=AGE[v];cw.style.transform=`scale(${.7+v*.06})`};age.oninput();
+document.getElementById('grow').onclick=function(){const g=cs.classList.toggle('grown');this.textContent=g?'חזרה לגור 🐾':'וכשהוא גדל? ✨';if(g)ao.textContent='כשהגור גדל הכתמים בפרווה נעלמים.';else age.oninput()};
+/* slide 8 hearts */
+heart.onclick=()=>{const st=heart.closest('.stage');for(let k=0;k<8;k++){const h=document.createElement('span');h.className='fh';h.textContent=['❤️','🧡','💛'][k%3];h.style.left=(8+Math.random()*10)+'%';h.style.bottom='10%';h.style.setProperty('--x',(Math.random()*160-30)+'px');h.style.animationDelay=k*.08+'s';st.appendChild(h);setTimeout(()=>h.remove(),2400)}};
+/* spacebar on title = roar */
+addEventListener('keydown',e=>{if(e.key==='r'||e.key==='R'||e.key==='ר'){const s=slides[i].querySelector('svg.lion:not(.sleepy)');if(s&&!s.closest('.cub'))roar(s)}});
+
+show((parseInt(location.hash.slice(1))||1)-1,0);
+hour=target=cycle?hour:+slides[i].dataset.hour||hour;camT=cam=i*330;
+requestAnimationFrame(loop);
 </script>
 </body></html>
